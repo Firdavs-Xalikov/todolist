@@ -36,7 +36,12 @@ import {
   INITIAL_AI_REVIEWS,
 } from '@/data/seedData';
 
+import { Language, TRANSLATIONS } from '@/data/translations';
+
 interface AppContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
   currentView: ViewType;
   setCurrentView: (view: ViewType) => void;
   isSidebarOpen: boolean;
@@ -83,9 +88,10 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_KEY = 'project_25_state_v2';
+const LOCAL_STORAGE_KEY = 'project_25_state_v3';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<Language>('en');
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -355,9 +361,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
 
+  const t = (key: string): string => {
+    return TRANSLATIONS[language]?.[key] || TRANSLATIONS.en[key] || key;
+  };
+
   return (
     <AppContext.Provider
       value={{
+        language,
+        setLanguage,
+        t,
         currentView,
         setCurrentView,
         isSidebarOpen,

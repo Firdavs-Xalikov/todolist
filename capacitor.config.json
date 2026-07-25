@@ -1,0 +1,13 @@
+{
+  "appId": "com.firdavsxalikov.project25",
+  "appName": "Project 25",
+  "webDir": "out",
+  "bundledWebRuntime": false,
+  "backgroundColor": "#090909",
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#090909"
+    }
+  }
+}

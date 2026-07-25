@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
-import { Clock, CheckCircle2, ArrowRight, CornerDownRight, Zap, RefreshCw, Award } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 export const TodayView: React.FC = () => {
-  const { todaySchedule, toggleScheduleItem, postponeScheduleItem } = useApp();
+  const { todaySchedule, toggleScheduleItem, postponeScheduleItem, t } = useApp();
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [swipingItemId, setSwipingItemId] = useState<string | null>(null);
 
@@ -36,25 +36,25 @@ export const TodayView: React.FC = () => {
   };
 
   return (
-    <div className="p-4 max-w-lg mx-auto space-y-4">
+    <div className="p-3 max-w-lg mx-auto space-y-3 pb-16">
       {/* Header Banner */}
-      <div className="bg-[#111111] border border-[#222222] rounded-[18px] p-4 space-y-3">
+      <div className="bg-[#111111] border border-[#222222] rounded-[18px] p-3.5 space-y-2.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Clock className="w-4 h-4 text-[#4F8CFF]" />
-            <h2 className="text-sm font-bold text-white tracking-tight">Today's Timeline Schedule</h2>
+            <Clock className="w-3.5 h-3.5 text-[#4F8CFF]" />
+            <h2 className="text-xs font-bold text-white tracking-tight">{t('todayScheduleHeader')}</h2>
           </div>
-          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-[8px] bg-[#4F8CFF]/10 text-[#4F8CFF] border border-[#4F8CFF]/20">
-            {completedCount} / {todaySchedule.length} DONE
+          <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-[6px] bg-[#4F8CFF]/10 text-[#4F8CFF] border border-[#4F8CFF]/20">
+            {completedCount} / {todaySchedule.length} {t('done').toUpperCase()}
           </span>
         </div>
 
         <div className="space-y-1">
-          <div className="flex justify-between text-[11px]">
+          <div className="flex justify-between text-[10px]">
             <span className="text-[#8B8B8B]">Daily Schedule Execution</span>
             <span className="text-white font-mono font-bold">{progressPct}%</span>
           </div>
-          <div className="w-full bg-[#090909] h-2 rounded-full overflow-hidden border border-[#222222]">
+          <div className="w-full bg-[#090909] h-1.5 rounded-full overflow-hidden border border-[#222222]">
             <div
               className="bg-[#4F8CFF] h-full transition-all duration-180"
               style={{ width: `${progressPct}%` }}
@@ -62,13 +62,13 @@ export const TodayView: React.FC = () => {
           </div>
         </div>
 
-        <p className="text-[10px] text-[#8B8B8B] text-center italic">
-          Tap to checkmark • Swipe right → Complete • Swipe left ← Postpone
+        <p className="text-[9px] text-[#8B8B8B] text-center italic">
+          {t('tapToToggle')}
         </p>
       </div>
 
       {/* Timeline List */}
-      <div className="relative pl-6 space-y-2.5 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-[2px] before:bg-[#222222]">
+      <div className="relative pl-5 space-y-2 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-[#222222]">
         {todaySchedule.map((item) => {
           const isDone = item.completed;
           const isPostponed = item.postponed;
@@ -79,7 +79,7 @@ export const TodayView: React.FC = () => {
               onTouchStart={(e) => handleTouchStart(e, item.id)}
               onTouchEnd={(e) => handleTouchEnd(e, item.id)}
               onClick={() => toggleScheduleItem(item.id)}
-              className={`relative p-3.5 rounded-[18px] border transition-all duration-180 cursor-pointer select-none ${
+              className={`relative p-3 rounded-[14px] border transition-all duration-180 cursor-pointer select-none ${
                 isDone
                   ? 'bg-[#111111]/60 border-[#222222] opacity-75'
                   : isPostponed
@@ -89,7 +89,7 @@ export const TodayView: React.FC = () => {
             >
               {/* Node Marker */}
               <div
-                className={`absolute -left-[22px] top-4 w-3.5 h-3.5 rounded-full border-2 transition-all ${
+                className={`absolute -left-[20px] top-3.5 w-3 h-3 rounded-full border-2 transition-all ${
                   isDone
                     ? 'bg-[#22C55E] border-[#090909]'
                     : isPostponed
@@ -99,15 +99,15 @@ export const TodayView: React.FC = () => {
               />
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2.5">
                   <input
                     type="checkbox"
                     checked={isDone}
                     onChange={() => {}}
-                    className="accent-[#22C55E] w-4 h-4 rounded cursor-pointer"
+                    className="accent-[#22C55E] w-3.5 h-3.5 rounded cursor-pointer"
                   />
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-[#4F8CFF]">
+                    <span className="text-[9px] font-mono font-bold text-[#4F8CFF]">
                       {item.time}
                     </span>
                     <h4
@@ -121,7 +121,7 @@ export const TodayView: React.FC = () => {
                 </div>
 
                 <span
-                  className={`text-[9px] font-mono px-2 py-0.5 rounded-[6px] border uppercase ${
+                  className={`text-[8px] font-mono px-1.5 py-0.5 rounded-[4px] border uppercase ${
                     isDone
                       ? 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20'
                       : isPostponed
@@ -129,7 +129,7 @@ export const TodayView: React.FC = () => {
                       : 'bg-[#090909] text-[#8B8B8B] border-[#222222]'
                   }`}
                 >
-                  {isDone ? 'Done' : isPostponed ? 'Postponed' : item.category}
+                  {isDone ? t('done') : isPostponed ? t('postponed') : item.category}
                 </span>
               </div>
             </div>

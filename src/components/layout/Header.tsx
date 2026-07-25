@@ -2,70 +2,67 @@
 
 import React from 'react';
 import { useApp } from '@/context/AppContext';
-import { Sparkles, Search, Clock, Zap, Flame, Shield, User } from 'lucide-react';
+import { Language } from '@/data/translations';
+import { Clock } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
     currentView,
     setCurrentView,
-    setIsCommandPaletteOpen,
-    setIsFocusTimerOpen,
-    setIsAICoachModalOpen,
-    profile,
-    islam,
+    language,
+    setLanguage,
+    t,
   } = useApp();
 
-  return (
-    <header className="sticky top-0 z-30 bg-[#090909]/95 backdrop-blur-md border-b border-[#222222] px-4 py-3 flex items-center justify-between">
-      {/* Brand & Level Badge */}
-      <div className="flex items-center space-x-2.5">
-        <button
-          onClick={() => setCurrentView('dashboard')}
-          className="w-8 h-8 rounded-[12px] bg-[#111111] border border-[#222222] flex items-center justify-center font-bold text-white text-xs"
-        >
-          25
-        </button>
-        <div>
-          <div className="flex items-center space-x-1.5">
-            <span className="text-sm font-bold text-white tracking-tight">PROJECT 25</span>
-            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-[6px] bg-[#4F8CFF]/10 text-[#4F8CFF] border border-[#4F8CFF]/20 font-bold">
-              LVL {profile.level}
-            </span>
-          </div>
-          <p className="text-[10px] text-[#8B8B8B] font-medium">Personal Operating System</p>
-        </div>
-      </div>
+  const languages: { code: Language; label: string }[] = [
+    { code: 'en', label: 'EN' },
+    { code: 'ru', label: 'RU' },
+    { code: 'uz', label: 'UZ' },
+  ];
 
-      {/* Action Controls */}
-      <div className="flex items-center space-x-2">
+  return (
+    <header className="sticky top-0 z-30 bg-[#090909]/95 backdrop-blur-md border-b border-[#222222] px-3 py-1 pt-safe-inset flex items-center justify-between">
+      {/* Compact Brand */}
+      <button
+        onClick={() => setCurrentView('dashboard')}
+        className="flex items-center space-x-1.5 active:scale-95 transition-transform"
+      >
+        <div className="w-6 h-6 rounded-[6px] bg-[#111111] border border-[#222222] flex items-center justify-center font-bold text-white text-[10px]">
+          25
+        </div>
+        <span className="text-xs font-bold text-white tracking-tight">{t('systemTitle')}</span>
+      </button>
+
+      {/* Ultra Compact Controls */}
+      <div className="flex items-center space-x-1.5">
+        {/* Micro Language Switcher */}
+        <div className="flex items-center bg-[#111111] border border-[#222222] rounded-[6px] p-0.5">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => setLanguage(lang.code)}
+              className={`px-1.5 py-0.5 text-[8px] font-mono font-bold rounded-[4px] transition-all duration-180 ${
+                language === lang.code
+                  ? 'bg-[#4F8CFF] text-white'
+                  : 'text-[#8B8B8B] hover:text-white'
+              }`}
+            >
+              {lang.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Compact Today Button */}
         <button
           onClick={() => setCurrentView('today')}
-          className={`px-2.5 py-1.5 border rounded-[12px] text-xs font-semibold flex items-center space-x-1.5 transition-all duration-180 ${
+          className={`px-2 py-1 border rounded-[6px] text-[10px] font-semibold flex items-center space-x-1 transition-all duration-180 ${
             currentView === 'today'
               ? 'bg-[#181818] border-[#4F8CFF] text-white'
               : 'bg-[#111111] border-[#222222] text-[#8B8B8B] hover:text-white'
           }`}
-          title="Today Schedule Timeline"
         >
-          <Clock className="w-3.5 h-3.5 text-[#4F8CFF]" />
-          <span className="hidden sm:inline">Today</span>
-        </button>
-
-        <button
-          onClick={() => setIsAICoachModalOpen(true)}
-          className="px-2.5 py-1.5 bg-[#111111] hover:bg-[#161616] border border-[#222222] rounded-[12px] text-xs font-semibold text-[#8B8B8B] hover:text-white flex items-center space-x-1.5 transition-all duration-180"
-          title="AI Coach Evening Review"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-          <span className="hidden sm:inline">AI Review</span>
-        </button>
-
-        <button
-          onClick={() => setIsCommandPaletteOpen(true)}
-          className="p-2 bg-[#111111] hover:bg-[#161616] border border-[#222222] rounded-[12px] text-[#8B8B8B] hover:text-white transition-colors"
-          title="Command Palette (⌘K)"
-        >
-          <Search className="w-4 h-4" />
+          <Clock className="w-3 h-3 text-[#4F8CFF]" />
+          <span>{t('todayBtn')}</span>
         </button>
       </div>
     </header>

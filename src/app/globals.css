@@ -34,6 +34,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Safe Area Inset utilities for iPhone 15 Pro Dynamic Island & Notch */
+.pt-safe-inset {
+  padding-top: max(env(safe-area-inset-top), 50px);
+}
+
+.pb-safe-inset {
+  padding-bottom: max(env(safe-area-inset-bottom), 20px);
+}
+
 /* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

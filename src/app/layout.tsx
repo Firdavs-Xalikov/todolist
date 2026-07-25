@@ -1,10 +1,18 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppProvider } from '@/context/AppContext';
 
 export const metadata: Metadata = {
-  title: 'FX Life OS — High Performance Personal Operating System',
-  description: 'A premium personal life operating system combining Apple Human Interface, Linear, Raycast, Vercel, and Notion design aesthetics.',
+  title: 'Project 25 — Personal Operating System',
+  description: 'A premium iPhone-native personal operating system combining Apple Health, Linear, Raycast, Vercel, and Notion aesthetics.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
