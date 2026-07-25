@@ -9,5 +9,9 @@
       "style": "DARK",
       "backgroundColor": "#090909"
     }
+  },
+  "server": {
+    "url": "https://todolist-xiex.vercel.app",
+    "cleartext": true
   }
 }
